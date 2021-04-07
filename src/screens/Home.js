@@ -13,11 +13,11 @@ const veri='http://ddragon.leagueoflegends.com/cdn/11.7.1/data/en_US/champion.js
 const Home = ({navigation}) => {
     const [data, setData] = useState([])
     const [newdata,setnewData]=useState([])
-    const [text,setText]=useState("")
+    const [texte,setText]=useState('')
     
     const veri=[]
     const getMoviesFromApi = () => {
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=tr-TR', {
+        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en-EN', {
         method: 'GET',
       
             }).then((response)=>response.json()).then((json)=>setData(json.results), setnewData(data))
@@ -58,11 +58,12 @@ const Home = ({navigation}) => {
 
      const searchFilter = (text) => {
         const newData = newdata.filter((item) => {
-          const listItem = `${item.original_title.toLowerCase()} `;
-    
-          return listItem.indexOf(text.toLowerCase()) > -1;
+          const listItem = item.original_title.toLowerCase();
+          
+          return  listItem.indexOf(text.toLowerCase()) != -1;
+          
         });
-    
+      
       
          setData(newData)
       };
@@ -122,16 +123,21 @@ const Home = ({navigation}) => {
                    alignItems:"center"
                }}>
                    <TextInput
+                        
                         onChangeText={(text)=>{
-                            setText()
+                            
+                            
                             searchFilter(text)
+                            text =="" ? getMoviesFromApi() : null
+                            
                         }}
+                        
                         placeholder="Search"
                         placeholderTextColor="#b1e5d3"
                         style={{
                             fontWeight:"bold",
                             fontSize:18,
-                            width:260
+                            width:260,color:'black'
                         }}
                    />
                    <Image

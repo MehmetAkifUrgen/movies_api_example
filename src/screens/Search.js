@@ -118,7 +118,8 @@ const Search = ({navigation}) => {
                         style={{
                             fontWeight:"bold",
                             fontSize:18,
-                            width:260
+                            width:260,
+                            color:'black'
                         }}
                    />
                    <TouchableOpacity onPress={()=>getMoviesFromApi()}>
