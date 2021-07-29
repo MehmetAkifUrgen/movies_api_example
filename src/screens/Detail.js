@@ -1,16 +1,24 @@
 import React from 'react'
 import {View, Text,Image, ScrollView } from 'react-native'
-import SwiperComponent from '../components/SwiperComponent'
+import {useState,useEffect, } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const Detail = ({route,navigation}) => {
     
-    const {language,title,overview,poster,date,vote}=route.params;
+    const {language,title,overview,poster,date,vote,id}=route.params;
 
+    const [data,setData]=useState([]);
+    const getMoviesFromApi = () => {
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=tr-TR`, {
+        method: 'GET',
+      
+            }).then((response)=>response.json()).then((json)=>setData(json.results))
+            .catch((error)=>Alert(error));
+        };
 
     return(
-        <View style={{
+        <ScrollView style={{
             flex:1,
             backgroundColor:"#FFF",
             
@@ -18,7 +26,7 @@ const Detail = ({route,navigation}) => {
             <View style={{
                 flexDirection:"row",
                 width:wp("100%"),
-                height:hp("80%")
+                height:hp("60%")
             }}>
                 <View style={{width:wp("10%"),paddingLeft:wp('2%')}}>
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
@@ -84,7 +92,7 @@ const Detail = ({route,navigation}) => {
                         source={{uri:'https://image.tmdb.org/t/p/w500'+poster}}
                         style={{
                           
-                            height:hp('70%'),
+                            height:hp('50%'),
                             width:wp('80%'),
                             borderRadius:30
                             
@@ -98,14 +106,14 @@ const Detail = ({route,navigation}) => {
                 <Text style={{fontSize:hp('2.2%'),fontWeight:'bold'}}> {title} </Text>
                 
             </View>
-            <ScrollView style={{marginTop:hp('3%'),marginHorizontal:wp('5%')}}>
+            <ScrollView style={{marginHorizontal:wp('5%')}}>
                 
                     <Text style={{fontSize:hp('2.2%'),textAlign:'justify'}}> {overview} </Text>
             </ScrollView>          
 
                         
                         
-        </View>
+        </ScrollView>
     )
 }
 export default Detail;

@@ -5,7 +5,7 @@ import {TextInput,ScrollView,TouchableOpacity} from 'react-native-gesture-handle
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const veri='http://ddragon.leagueoflegends.com/cdn/11.7.1/data/en_US/champion.json';
+
 
 
 
@@ -15,9 +15,9 @@ const Home = ({navigation}) => {
     const [newdata,setnewData]=useState([])
     const [texte,setText]=useState('')
     
-    const veri=[]
+    
     const getMoviesFromApi = () => {
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en-EN', {
+        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=tr-TR', {
         method: 'GET',
       
             }).then((response)=>response.json()).then((json)=>setData(json.results), setnewData(data))
@@ -39,14 +39,15 @@ const Home = ({navigation}) => {
         const poster=item.poster_path
         const date=item.release_date
         const vote=item.vote_average
+        const id =item.id
         return(
             <TouchableOpacity
-                onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote})}
+                onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote,id})}
             
             style={{width:wp('50%'),height:hp('40%'),alignItems:'center',justifyContent:'center'}}>
                 <Image resizeMode="stretch" style={{width:'90%',height:'80%',borderRadius:10}} source={{uri:'https://image.tmdb.org/t/p/w500'+item.poster_path}}></Image>
                 <View style={{flexDirection:'row'}}>
-                <Text style={{width:wp('40%'),height:hp('7%'),fontSize:hp('2%'),textAlign:'center'}}> {item.original_title}</Text>
+                <Text style={{width:wp('40%'),height:hp('7%'),fontSize:hp('2%'),textAlign:'center'}}> {item.title}</Text>
                 {/* <Text style={{fontSize:hp('2.2%')}}> {item.vote_average} </Text> */}
                 </View>
             </TouchableOpacity>
@@ -103,15 +104,7 @@ const Home = ({navigation}) => {
                    </View>
                </View>
            </View>
-           <LinearGradient
-            colors={["rgba(0,164,109,0.4)", "transparent"]}
-            style={{
-                left:0,
-                right:0,
-                height:90,
-                marginTop:-45
-            }}
-           >
+           
                <View style={{
                    backgroundColor:"#FFF",
                    paddingVertical:8,
@@ -120,7 +113,8 @@ const Home = ({navigation}) => {
                    borderRadius:15,
                    marginTop:25,
                    flexDirection:"row",
-                   alignItems:"center"
+                   alignItems:"center",
+                   justifyContent:'center'
                }}>
                    <TextInput
                         
@@ -145,7 +139,7 @@ const Home = ({navigation}) => {
                     style={{height:20,width:20}}
                    />
                </View>
-            </LinearGradient>
+            
            
             <FlatList
                 contentContainerStyle={{ flexGrow:1,marginTop:hp('1%')}}

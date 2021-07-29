@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from '../screens/Home'
 import Detail from '../screens/Detail'
 import Favourite from '../screens/Search'
-import Profile from '../screens/Profile'
+
 import {Image} from 'react-native'
 import Search from '../screens/Search'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -19,7 +19,7 @@ const BottomTabNavigator = () => {
                     height:hp('8%'),
                     justifyContent:"center",
                    
-                    backgroundColor:"#fff",
+                    backgroundColor:"#00a46c",
                     
                    
                 }
