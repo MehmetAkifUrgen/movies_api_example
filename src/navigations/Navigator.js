@@ -1,76 +1,73 @@
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createStackNavigator } from '@react-navigation/stack'
-import Home from '../screens/Home'
-import Detail from '../screens/Detail'
-import Favourite from '../screens/Search'
+/* eslint-disable prettier/prettier */
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import Home from '../screens/Home';
+import Detail from '../screens/Detail';
+import Favourite from '../screens/Search';
 
-import {Image} from 'react-native'
-import Search from '../screens/Search'
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import {Image} from 'react-native';
+import Search from '../screens/Search';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
-    return(
-        <Tab.Navigator
-            tabBarOptions={{
-                style:{
-                    height:hp('8%'),
-                    justifyContent:"center",
-                   
-                    backgroundColor:"#00a46c",
-                    
-                   
-                }
-            }}
-        >
-            <Tab.Screen
-                name="Home"
-                component={Home}
-                options={{
-                    tabBarLabel:"",
-                    tabBarIcon:({color, size}) => (
-                        <Image
-                            source={require("../images/popularity.png")}
-                            style={{ height:hp('4%'), width:wp('8%') }}
-                        />
-                    )
-                }}
-            />
+  return (
+    <Tab.Navigator
+      tabBarOptions={{
+        style: {
+          height: hp('8%'),
+          justifyContent: 'center',
 
-            <Tab.Screen
-                name="Search"
-                component={Search}
-                options={{
-                    tabBarLabel:"",
-                    tabBarIcon:({color, size}) => (
-                        <Image
-                            
-                            source={require("../images/search.png")}
-                            style={{  height:hp('4%'), width:wp('8%')  }}
-                        />
-                    )
-                }}
+          backgroundColor: '#00a46c',
+        },
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color, size}) => (
+            <Image
+              source={require('../images/popularity.png')}
+              style={{height: hp('4%'), width: wp('8%')}}
             />
-            
-        </Tab.Navigator>
-    );
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color, size}) => (
+            <Image
+              source={require('../images/search.png')}
+              style={{height: hp('4%'), width: wp('8%')}}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 };
-
 
 const Stack = createStackNavigator();
 const screenOptionStyle = {
-    headerShown: false
-}
+  headerShown: false,
+};
 
 const HomeStackNavigator = () => {
-    return(
-        <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="Home" component={BottomTabNavigator}/>
-            <Stack.Screen name="Detail" component={Detail}/>
-        </Stack.Navigator>
-    )
-}
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen name="Home" component={BottomTabNavigator} />
+      <Stack.Screen name="Detail" component={Detail} />
+    </Stack.Navigator>
+  );
+};
 
 export default HomeStackNavigator;
