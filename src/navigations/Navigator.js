@@ -33,7 +33,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({color, size}) => (
             <Image
               source={require('../images/popularity.png')}
-              style={{height: hp('4%'), width: wp('8%')}}
+              style={{height: hp('5%'), width: wp('8%')}}
             />
           ),
         }}
@@ -47,7 +47,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({color, size}) => (
             <Image
               source={require('../images/search.png')}
-              style={{height: hp('4%'), width: wp('8%')}}
+              style={{height: hp('5%'), width: wp('8%')}}
             />
           ),
         }}
