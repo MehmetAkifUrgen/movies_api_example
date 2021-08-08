@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/Home';
 import Detail from '../screens/Detail';
-import Favourite from '../screens/Search';
+
 
 import {Image} from 'react-native';
 import Search from '../screens/Search';
@@ -22,18 +22,20 @@ const BottomTabNavigator = () => {
           height: hp('8%'),
           justifyContent: 'center',
 
-          backgroundColor: '#00a46c',
+          backgroundColor: '#FEFEFE',
         },
       }}>
       <Tab.Screen
         name="Home"
         component={Home}
+
         options={{
-          tabBarLabel: '',
+          tabBarLabel:"",
           tabBarIcon: ({color, size}) => (
             <Image
-              source={require('../images/popularity.png')}
-              style={{height: hp('5%'), width: wp('8%')}}
+              resizeMode="contain"
+              source={require('../images/home.png')}
+              style={{height: hp('4%'), width: wp('7%')}}
             />
           ),
         }}
@@ -43,15 +45,45 @@ const BottomTabNavigator = () => {
         name="Search"
         component={Search}
         options={{
-          tabBarLabel: '',
+         
+          tabBarLabel:"",
           tabBarIcon: ({color, size}) => (
             <Image
+            resizeMode="contain"
               source={require('../images/search.png')}
-              style={{height: hp('5%'), width: wp('8%')}}
+              style={{height: hp('4%'), width: wp('7%')}}
             />
           ),
         }}
       />
+       {/* <Tab.Screen
+        name="Rate"
+        component={Search}
+        options={{
+          tabBarLabel:"",
+          tabBarIcon: ({color, size}) => (
+            <Image
+            resizeMode="contain"
+              source={require('../images/star.png')}
+              style={{height: hp('4%'), width: wp('7%')}}
+            />
+          ),
+        }}
+      />
+       <Tab.Screen
+        name="Profile"
+        component={Search}
+        options={{
+          tabBarLabel:"",
+          tabBarIcon: ({color, size}) => (
+            <Image
+            resizeMode="contain"
+              source={require('../images/user.png')}
+              style={{height: hp('4%'), width: wp('7%')}}
+            />
+          ),
+        }}
+      /> */}
     </Tab.Navigator>
   );
 };

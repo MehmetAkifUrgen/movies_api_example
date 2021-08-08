@@ -4,6 +4,7 @@ import {View, Text, Image, ImageBackground, Alert, FlatList} from 'react-native'
 import {TextInput,ScrollView,TouchableOpacity} from 'react-native-gesture-handler'
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -17,7 +18,7 @@ const Home = ({navigation}) => {
     
     
     const getMoviesFromApi = () => {
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=tr-TR', {
+        fetch('https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en_EN', {
         method: 'GET',
       
             }).then((response)=>response.json()).then((json)=>setData(json.results), setnewData(data))
@@ -30,6 +31,7 @@ const Home = ({navigation}) => {
         getMoviesFromApi()
         
      },[] );
+   
 
 
      const renderItem= ({item}) => {
@@ -40,9 +42,18 @@ const Home = ({navigation}) => {
         const date=item.release_date
         const vote=item.vote_average
         const id =item.id
+        const backPoster=item.backdrop_path
+        const voteCount=item.vote_count
+        
+        
+        AsyncStorage.setItem('id', JSON.stringify(id)).then(() => {
+            // console.log("TOKEN ==>>", champ)
+       
+           });
+
         return(
             <TouchableOpacity
-                onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote,id})}
+                onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote,id,backPoster,voteCount})}
             
             style={{width:wp('50%'),height:hp('40%'),alignItems:'center',justifyContent:'center'}}>
                 <Image resizeMode="stretch" style={{width:'90%',height:'80%',borderRadius:10}} source={{uri:'https://image.tmdb.org/t/p/w500'+item.poster_path}}></Image>
@@ -76,7 +87,7 @@ const Home = ({navigation}) => {
             flex:1
         }}>
            <View style={{
-               backgroundColor:"#00a46c",
+               backgroundColor:"#C0DAD6",
                height:hp('17%'),
                borderBottomLeftRadius:wp('2%'),
                borderBottomRightRadius:wp('2%'),
@@ -92,7 +103,7 @@ const Home = ({navigation}) => {
                    <View style={{width:"50%"}}>
                         <Text style={{
                             fontSize:28,
-                            color:"#FFF",
+                            color:"#0A344C",
                             fontWeight:"bold"
                         }}>Popular Movies</Text>
                    </View>

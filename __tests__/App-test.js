@@ -12,3 +12,6 @@ import renderer from 'react-test-renderer';
 it('renders correctly', () => {
   renderer.create(<App />);
 });
+beforeAll(() => { 
+  jest.mock('@react-native-community/async-storage');
+})
