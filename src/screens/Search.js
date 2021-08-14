@@ -37,9 +37,10 @@ const Search = ({navigation}) => {
         const poster=item.poster_path
         const date=item.release_date
         const vote=item.vote_average
+        const id=item.id
         return(
             <TouchableOpacity 
-            onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote})}
+            onPress={()=> navigation.navigate('Detail',{language,title,overview,poster,date,vote,id})}
             style={{width:wp('50%'),height:hp('40%'),alignItems:'center',justifyContent:'center'}}>
                 <Image resizeMode="stretch" style={{width:'90%',height:'80%',borderRadius:10}} source={{uri:'https://image.tmdb.org/t/p/w500'+item.poster_path}}></Image>
                 <View style={{flexDirection:'row'}}>

@@ -47,7 +47,7 @@ const Home = ({navigation}) => {
         
         
         AsyncStorage.setItem('id', JSON.stringify(id)).then(() => {
-            // console.log("TOKEN ==>>", champ)
+             
        
            });
 

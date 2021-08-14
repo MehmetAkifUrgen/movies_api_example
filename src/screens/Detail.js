@@ -13,21 +13,22 @@ const Detail = ({route, navigation}) => {
   const {language, title, overview, poster, date, vote, id,backPoster,voteCount} = route.params;
 
   const [data, setData] = useState([]);
-  const [Cast, setCast] = useState([]);
+  const [credits, setCredits] = useState([]);
   const [control, setControl] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getCast = ()=> {
+  const getCast  = async ()=> {
   AsyncStorage.getItem('id', (error,value) => {
+    console.log('/*/*/*/',value)
     if(!error){
         
         if(value !== null){
-            fetch(`https://api.themoviedb.org/3/movie/${value}/credits?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en-US
+            fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en-US
             `, {
                 method: 'GET',
               
-                    }).then((response)=>response.json()).then((json)=>{setCast(json.data); setIsLoading(false),setControl(true) })
+                    }).then((response)=>response.json()).then((json)=>{setCredits(json.cast); setIsLoading(false),setControl(true) })
                     .catch((err)=> {setIsLoading(false),setError(err)}
                        );
                    
@@ -37,17 +38,7 @@ const Detail = ({route, navigation}) => {
         }
 })}
 
-  const getMoviesFromApi = () => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=tr-TR`,
-      {
-        method: 'GET',
-      },
-    )
-      .then(response => response.json())
-      .then(json => setData(json.results));setIsLoading(false);setControl(true)
-      .catch((err)=> {setIsLoading(false),setError(err)});
-  };
+  
  
    useEffect(() => {
     setIsLoading(true);
@@ -88,9 +79,20 @@ const Detail = ({route, navigation}) => {
         // });
 
 
-        console.log('/*/*/*/*',Cast)
+        console.log('----------------',credits)
 
     if(control){
+      const costum = credits.map((value,index) => {
+       
+        return(
+            <View style={{marginHorizontal:wp('2%'),width:wp('20%')}} key={index}>
+                  <Image resizeMode="stretch" style={{ width:wp('20%'),height:hp('15%'),borderRadius:wp('5%')  }} source={{uri: 'https://image.tmdb.org/t/p/w500' + value.profile_path}} ></Image>
+                  <Text style={{textAlign:'center'}}> {value.name} </Text>
+            </View>
+            
+            
+        )
+  });
 
       return (
         <ScrollView
@@ -106,7 +108,7 @@ const Detail = ({route, navigation}) => {
               justifyContent:'center',
               alignItems:'center'
             }}>
-              <ImageBackground resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + backPoster}}/>
+              <ImageBackground resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
     
               
            
@@ -117,7 +119,7 @@ const Detail = ({route, navigation}) => {
                 source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}
                 style={{
                   height: hp('45%'),
-                  width: wp('70%'),
+                  width: wp('60%'),
                   borderRadius: 30,
                 }}
               />
@@ -165,7 +167,9 @@ const Detail = ({route, navigation}) => {
                 <Text style={{textAlign:'justify',color:'#566F7B',fontSize:hp('1.8%')}}> {overview} </Text>
               </View>
               <Text style={{left:wp('5%'),marginTop:hp('2.5%'),color:'#0D334F',fontSize:hp('2.5%'),fontWeight:'bold'}}> CAST </Text>
-              
+              <ScrollView style={{flexDirection:'row'}} horizontal={true}> 
+                {costum}
+              </ScrollView>
           
         </ScrollView>
       );
