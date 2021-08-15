@@ -1,6 +1,6 @@
 import { NavigationHelpersContext } from '@react-navigation/core';
-import React,{useState,useEffect, } from 'react'
-import {View, Text, Image, ImageBackground, Alert, FlatList} from 'react-native'
+import React,{useState,useEffect,use } from 'react'
+import {View, Text, Image, ImageBackground, Alert, FlatList,BackHandler} from 'react-native'
 import {TextInput,ScrollView,TouchableOpacity} from 'react-native-gesture-handler'
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -11,10 +11,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
+
+
 const Home = ({navigation}) => {
     const [data, setData] = useState([])
     const [newdata,setnewData]=useState([])
     const [texte,setText]=useState('')
+
+    useEffect(
+        React.useCallback(() => {
+          const onBackPress = () => {
+            if (isSelectionModeEnabled()) {
+              disableSelectionMode();
+              return true;
+            } else {
+              return false;
+            }
+          };
+    
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    
+          return () =>
+            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [isSelectionModeEnabled, disableSelectionMode])
+      );
+      const isSelectionModeEnabled =()=>{
+          return true
+      }
+      const disableSelectionMode=()=>{
+          return false
+      }
+   
     
     
     const getMoviesFromApi = () => {
@@ -29,6 +56,10 @@ const Home = ({navigation}) => {
 
     useEffect(() => {
         getMoviesFromApi()
+        navigation.addListener('beforeRemove', (e) => {
+            
+              return;
+            })
         
      },[] );
    

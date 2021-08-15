@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/Home';
 import Detail from '../screens/Detail';
-
+import Login from '../screens/Login'
 
 import {Image} from 'react-native';
 import Search from '../screens/Search';
@@ -96,6 +96,7 @@ const screenOptionStyle = {
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={BottomTabNavigator} />
       <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>

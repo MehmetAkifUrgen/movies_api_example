@@ -109,7 +109,9 @@ const Detail = ({route, navigation}) => {
               alignItems:'center'
             }}>
               <ImageBackground resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
-    
+              <TouchableOpacity style={{flex:1,position:'absolute',alignItems:'flex-start',justifyContent:'flex-start',zIndex:2}} onPress={()=> navigation.navigate('Home')}>
+                <Image style={{width:wp('10%'),height:hp('8%')}} source={require('../images/back.png')}></Image>
+              </TouchableOpacity>
               
            
             <View
