@@ -97,7 +97,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={BottomTabNavigator} />
       <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>
   );

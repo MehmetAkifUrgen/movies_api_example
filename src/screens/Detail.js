@@ -109,9 +109,9 @@ const Detail = ({route, navigation}) => {
               alignItems:'center'
             }}>
               <Image resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
-              <View style={{flex:1,position:'absolute',zIndex:2,top:hp('5%'),left:wp('5%')}}>
+              <View style={{flex:1,position:'absolute',zIndex:2,top:hp('3%'),left:wp('5%'),opacity:1}}>
               <TouchableOpacity  onPress={()=> navigation.navigate('Home')}>
-                <Image style={{width:wp('10%'),height:hp('8%')}} source={require('../images/back.png')}></Image>
+                <Image resizeMode="contain" style={{width:wp('7%'),height:hp('4%')}} source={require('../images/back.png')}></Image>
               </TouchableOpacity>
               
               </View>
@@ -140,7 +140,7 @@ const Detail = ({route, navigation}) => {
               </Text>
               <Rating
                 type='custom'
-                count={5}
+                count={10}
                 imageSize={wp('5%')}
                 ratingBackgroundColor="grey"
                 ratingColor="gold"
