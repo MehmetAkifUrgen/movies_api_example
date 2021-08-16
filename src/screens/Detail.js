@@ -108,14 +108,16 @@ const Detail = ({route, navigation}) => {
               justifyContent:'center',
               alignItems:'center'
             }}>
-              <ImageBackground resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
-              <TouchableOpacity style={{flex:1,position:'absolute',alignItems:'flex-start',justifyContent:'flex-start',zIndex:2}} onPress={()=> navigation.navigate('Home')}>
+              <Image resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
+              <View style={{flex:1,position:'absolute',zIndex:2,top:hp('5%'),left:wp('5%')}}>
+              <TouchableOpacity  onPress={()=> navigation.navigate('Home')}>
                 <Image style={{width:wp('10%'),height:hp('8%')}} source={require('../images/back.png')}></Image>
               </TouchableOpacity>
               
+              </View>
            
             <View
-              style={{width: wp('90%'), alignItems: 'center', marginTop: hp('5%'),position:'absolute'}}>
+              style={{flex:1,width: wp('90%'), alignItems: 'center', marginTop: hp('5%'),position:'absolute',zIndex:1}}>
               <Image
                 resizeMode="stretch"
                 source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}
