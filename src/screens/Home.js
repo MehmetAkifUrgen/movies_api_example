@@ -21,11 +21,17 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 const Home = ({navigation}) => {
   const [data, setData] = useState([]);
   const [newdata, setnewData] = useState([]);
   const [texte, setText] = useState('');
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+    // Handle user state changes
+   
 
   useEffect(
     React.useCallback(() => {
@@ -51,7 +57,7 @@ const Home = ({navigation}) => {
     return false;
   };
 
-  const getMoviesFromApi = () => {
+  const getMoviesFromApi = async () => {
     fetch(
       'https://api.themoviedb.org/3/movie/popular?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1&language=en_EN',
       {
@@ -69,6 +75,23 @@ const Home = ({navigation}) => {
       return;
     });
   }, []);
+  useEffect(() => {
+    let isMounted = true;               // note mutable flag
+    getMoviesFromApi().then(data2 => {
+      if (isMounted) setData(data2);    // add conditional check
+    })
+    return () => { isMounted = false }; // cleanup toggles value, if unmounted
+  }, []); 
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }  
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    console.log('user,',user)
+    return subscriber; // unsubscribe on unmount
+    
+  }, [])
 
   const renderItem = ({item}) => {
     const language = item.original_language;

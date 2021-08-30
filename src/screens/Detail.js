@@ -17,10 +17,10 @@ const Detail = ({route, navigation}) => {
   const [control, setControl] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [rate,setRating]=useState()
   const getCast  = async ()=> {
   AsyncStorage.getItem('id', (error,value) => {
-    console.log('/*/*/*/',value)
+    
     if(!error){
         
         if(value !== null){
@@ -38,6 +38,42 @@ const Detail = ({route, navigation}) => {
         }
 })}
 
+  const Rated= async()=> {
+    AsyncStorage.getItem('id',(error,value)=> {
+      if(!error) {
+        fetch(`https://api.themoviedb.org/3/movie/${id}/rating?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1`,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+            
+          },
+          body: {
+            value:rate
+          }
+        }).then(response => response.json())
+        .then(data => {
+          console.log('Success:');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+        
+      }
+    })
+  }
+  const ratingCompleted=async(rating)=> {
+    console.log("Rating is: " + rating)
+    setRating(rating)
+    Rated()
+  }
+  
+  useEffect(() => {
+    let isMounted = true;               // note mutable flag
+    getCast().then(data2 => {
+      if (isMounted) setCredits(data2);    // add conditional check
+    })
+    return () => { isMounted = false }; // cleanup toggles value, if unmounted
+  }, []); 
   
  
    useEffect(() => {
@@ -57,7 +93,7 @@ const Detail = ({route, navigation}) => {
   if (error) {
     setControl(true)
     setError(false)
-    console.log("dsfsdfsdf",data)
+  
    return (
      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
        <Text style={{ fontSize: 18}}>
@@ -79,7 +115,7 @@ const Detail = ({route, navigation}) => {
         // });
 
 
-        console.log('----------------',credits)
+     
 
     if(control){
       const costum = credits.map((value,index) => {
@@ -108,7 +144,7 @@ const Detail = ({route, navigation}) => {
               justifyContent:'center',
               alignItems:'center'
             }}>
-              <Image resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
+              <Image resizeMode="stretch" style={{width:'100%',height:'100%',opacity:.5,backgroundColor:'black'}} source={{uri: 'https://image.tmdb.org/t/p/w500' + poster}}/>
               <View style={{flex:1,position:'absolute',zIndex:2,top:hp('3%'),left:wp('5%'),opacity:1}}>
               <TouchableOpacity  onPress={()=> navigation.navigate('Home')}>
                 <Image resizeMode="contain" style={{width:wp('7%'),height:hp('4%')}} source={require('../images/back.png')}></Image>
@@ -140,14 +176,14 @@ const Detail = ({route, navigation}) => {
               </Text>
               <Rating
                 type='custom'
-                count={10}
+                ratingCount={10}
                 imageSize={wp('5%')}
                 ratingBackgroundColor="grey"
                 ratingColor="gold"
-                startingValue={vote/2}
+                startingValue={vote}
                 tintColor="white"
-                
-                jumpValue={.1}
+                onFinishRating={ratingCompleted()}
+                jumpValue={.5}
               />
               
           </View>

@@ -4,11 +4,12 @@ import auth from '@react-native-firebase/auth';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
+
 const Login = ({
     navigation
 }) => {
-   
     
+ 
    
 
     const [email, onChangeemail] = React.useState("");
@@ -23,6 +24,7 @@ const Login = ({
           navigation.navigate('Home')
         })
         .catch(error => {
+            
             Alert.alert(error)
       
           
@@ -32,6 +34,7 @@ const Login = ({
             .signInWithEmailAndPassword(email, password)
             .then(() => {
               console.log('User account created & signed in!');
+              
               navigation.navigate('Home')
             })
             .catch(error => {
