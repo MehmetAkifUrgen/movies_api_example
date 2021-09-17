@@ -1,4 +1,25 @@
-module.exports = {
-  root: true,
-  extends: '@react-native-community',
-};
+{
+  "env"= {
+    "browser": true,
+    "es7": true
+  },
+  "parser"= "babel-eslint",
+  "parserOptions"={
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "plugins"=["prettier", "react"],
+  "extends"= ["prettier", "eslint:recommended", "plugin:react/recommended"],
+  "rules"= {
+    "prettier/prettier": "error"
+  },
+  "settings"= {
+    "react": {
+      "version": "detetect"
+    }
+  }
+}
