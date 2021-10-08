@@ -38,7 +38,7 @@ const Detail = ({route, navigation}) => {
         }
 })}
 
-  const Rated= async()=> {
+  const Rated= async(rate)=> {
     AsyncStorage.getItem('id',(error,value)=> {
       if(!error) {
         fetch(`https://api.themoviedb.org/3/movie/${id}/rating?api_key=b953ac9f9bd22f92fd0cc94a9cc906b1`,{
@@ -64,16 +64,10 @@ const Detail = ({route, navigation}) => {
   const ratingCompleted=async(rating)=> {
     console.log("Rating is: " + rating)
     setRating(rating)
-    Rated()
+    Rated(rate)
   }
   
-  useEffect(() => {
-    let isMounted = true;               // note mutable flag
-    getCast().then(data2 => {
-      if (isMounted) setCredits(data2);    // add conditional check
-    })
-    return () => { isMounted = false }; // cleanup toggles value, if unmounted
-  }, []); 
+  
   
  
    useEffect(() => {
@@ -182,7 +176,7 @@ const Detail = ({route, navigation}) => {
                 ratingColor="gold"
                 startingValue={vote}
                 tintColor="white"
-                onFinishRating={ratingCompleted()}
+                
                 jumpValue={.5}
               />
               

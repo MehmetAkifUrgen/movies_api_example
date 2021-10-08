@@ -1,25 +1,27 @@
-{
-  "env"= {
-    "browser": true,
-    "es7": true
+module.exports = {
+  env: {
+    commonjs: true,
+    node: true,
+    browser: true,
+    es6: true,
+    jest: true,
   },
-  "parser"= "babel-eslint",
-  "parserOptions"={
-    "ecmaVersion": 8,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "modules": true
-    }
+  extends: ["eslint:recommended", "plugin:react/recommended"],
+  globals: {},
+  parser: "babel-eslint",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2021,
+    sourceType: "module",
   },
-  "plugins"=["prettier", "react"],
-  "extends"= ["prettier", "eslint:recommended", "plugin:react/recommended"],
-  "rules"= {
-    "prettier/prettier": "error"
+  plugins: ["react", "import", "react-hooks"],
+  ignorePatterns: ["node_modules/"],
+  rules: {},
+  settings: {
+    react: {
+      version: "latest", // "detect" automatically picks the version you have installed.
+    },
   },
-  "settings"= {
-    "react": {
-      "version": "detetect"
-    }
-  }
-}
+};

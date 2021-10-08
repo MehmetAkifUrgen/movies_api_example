@@ -1,21 +1,14 @@
-/* eslint-disable prettier/prettier */
-import {NavigationHelpersContext} from '@react-navigation/core';
-import React, {useState, useEffect, use} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   Image,
-  ImageBackground,
   Alert,
   FlatList,
   BackHandler,
+  StyleSheet,
 } from 'react-native';
-import {
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -26,12 +19,10 @@ import auth from '@react-native-firebase/auth';
 const Home = ({navigation}) => {
   const [data, setData] = useState([]);
   const [newdata, setnewData] = useState([]);
-  const [texte, setText] = useState('');
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-    // Handle user state changes
-   
+  // Handle user state changes
 
   useEffect(
     React.useCallback(() => {
@@ -76,22 +67,27 @@ const Home = ({navigation}) => {
     });
   }, []);
   useEffect(() => {
-    let isMounted = true;               // note mutable flag
+    let isMounted = true; // note mutable flag
     getMoviesFromApi().then(data2 => {
-      if (isMounted) setData(data2);    // add conditional check
-    })
-    return () => { isMounted = false }; // cleanup toggles value, if unmounted
-  }, []); 
+      if (isMounted) {
+        setData(data2);
+      } // add conditional check
+    });
+    return () => {
+      isMounted = false;
+    }; // cleanup toggles value, if unmounted
+  }, []);
   function onAuthStateChanged(user) {
     setUser(user);
-    if (initializing) setInitializing(false);
-  }  
+    if (initializing) {
+      setInitializing(false);
+    }
+  }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    console.log('user,',user)
+    console.log('user,', user);
     return subscriber; // unsubscribe on unmount
-    
-  }, [])
+  }, []);
 
   const renderItem = ({item}) => {
     const language = item.original_language;
@@ -121,32 +117,16 @@ const Home = ({navigation}) => {
             voteCount,
           })
         }
-        style={{
-          width: wp('50%'),
-          height: hp('40%'),
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        style={styles.movie_button}>
         <Image
           resizeMode="stretch"
-          style={{width: '90%', height: '80%', borderRadius: 10}}
+          style={styles.movie_image}
           source={{
             uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path,
           }}
         />
-        <View style={{flexDirection: 'row'}}>
-          <Text
-            style={{
-              width: wp('40%'),
-              height: hp('7%'),
-              fontSize: hp('2%'),
-              textAlign: 'center',
-            }}>
-            {' '}
-            {item.title}
-          </Text>
-          {/* <Text style={{fontSize:hp('2.2%')}}> {item.vote_average} </Text> */}
-        </View>
+
+        <Text style={styles.movie_text}> {item.title}</Text>
       </TouchableOpacity>
     );
   };
@@ -162,57 +142,22 @@ const Home = ({navigation}) => {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: '#FFF',
-        flex: 1,
-      }}>
-      <View
-        style={{
-          backgroundColor: '#C0DAD6',
-          height: hp('17%'),
-          borderBottomLeftRadius: wp('2%'),
-          borderBottomRightRadius: wp('2%'),
-          paddingHorizontal: wp('2%'),
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 25,
-            width: '100%',
-          }}>
-          <View style={{width: '50%'}}>
-            <Text
-              style={{
-                fontSize: 28,
-                color: '#0A344C',
-                fontWeight: 'bold',
-              }}>
-              Popular Movies
-            </Text>
+    <View style={styles.container}>
+      <View style={styles.headers}>
+        <View style={styles.headers_body}>
+          <View style={styles.headers_left}>
+            <Text style={styles.headers_title}>Popular Movies</Text>
           </View>
-          <View style={{width: '50%', alignItems: 'flex-end'}}>
+          <View style={styles.headers_right}>
             <Image
               source={require('../images/clapperboard.png')}
-              style={{height: 60, width: 60}}
+              style={styles.headers_image}
             />
           </View>
         </View>
       </View>
 
-      <View
-        style={{
-          backgroundColor: '#FFF',
-          paddingVertical: 8,
-          paddingHorizontal: 20,
-          marginHorizontal: 20,
-          borderRadius: 15,
-          marginTop: 25,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <View style={styles.body}>
         <TextInput
           onChangeText={text => {
             searchFilter(text);
@@ -220,21 +165,14 @@ const Home = ({navigation}) => {
           }}
           placeholder="Search"
           placeholderTextColor="#b1e5d3"
-          style={{
-            fontWeight: 'bold',
-            fontSize: 18,
-            width: 260,
-            color: 'black',
-          }}
+          style={styles.input}
         />
-        <Image
-          source={require('../images/3.png')}
-          style={{height: 20, width: 20}}
-        />
+        <Image source={require('../images/3.png')} style={styles.input_image} />
+        
       </View>
 
       <FlatList
-        contentContainerStyle={{flexGrow: 1, marginTop: hp('1%')}}
+        contentContainerStyle={styles.list}
         data={data}
         renderItem={renderItem}
         refreshing={true}
@@ -244,4 +182,82 @@ const Home = ({navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  movie_button: {
+    width: wp('50%'),
+    height: hp('40%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  movie_image: {
+    width: '90%',
+    height: '80%',
+    borderRadius: 10,
+  },
+  movie_text: {
+    width: wp('40%'),
+    height: hp('7%'),
+    fontSize: hp('2%'),
+    textAlign: 'center',
+  },
+  container: {
+    backgroundColor: '#FFF',
+    flex: 1,
+  },
+  headers: {
+    height: hp('17%'),
+    backgroundColor: '#C0DAD6',
+    borderBottomLeftRadius: wp('2%'),
+    borderBottomRightRadius: wp('2%'),
+    paddingHorizontal: wp('2%'),
+  },
+  headers_body: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 25,
+    width: '100%',
+  },
+  headers_left: {
+    width: '50%',
+  },
+  headers_title: {
+    fontSize: 28,
+    color: '#0A344C',
+    fontWeight: 'bold',
+  },
+  headers_right: {
+    width: '50%',
+    alignItems: 'flex-end',
+  },
+  headers_image: {
+    height: 60,
+    width: 60,
+  },
+  body: {
+    backgroundColor: '#FFF',
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    borderRadius: 15,
+    marginTop: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  input: {
+    fontSize: 18,
+    width: 260,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  input_image: {
+    width: 20,
+    height: 20,
+  },
+  list: {
+    flexGrow: 1,
+    marginTop: hp('1%'),
+  },
+});
 export default Home;

@@ -1,10 +1,9 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/Home';
 import Detail from '../screens/Detail';
-import Login from '../screens/Login'
+import Login from '../screens/Login';
 
 import {Image} from 'react-native';
 import Search from '../screens/Search';
@@ -28,9 +27,8 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-
         options={{
-          tabBarLabel:"",
+          tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
             <Image
               resizeMode="contain"
@@ -45,18 +43,17 @@ const BottomTabNavigator = () => {
         name="Search"
         component={Search}
         options={{
-         
-          tabBarLabel:"",
+          tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
             <Image
-            resizeMode="contain"
+              resizeMode="contain"
               source={require('../images/search.png')}
               style={{height: hp('4%'), width: wp('7%')}}
             />
           ),
         }}
       />
-       {/* <Tab.Screen
+      {/* <Tab.Screen
         name="Rate"
         component={Search}
         options={{
@@ -96,7 +93,7 @@ const screenOptionStyle = {
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Login" component={Login} />
+      {/* <Stack.Screen name="Login" component={Login} /> */}
       <Stack.Screen name="Home" component={BottomTabNavigator} />
       <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>
